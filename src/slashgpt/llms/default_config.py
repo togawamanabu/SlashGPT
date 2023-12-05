@@ -1,14 +1,11 @@
-from slashgpt.llms.engine.hosted import LLMEngineHosted
-from slashgpt.llms.engine.openai_gpt import LLMEngineOpenAIGPT
-from slashgpt.llms.engine.openai_legacy import LLMEngineOpenAILegacy
-from slashgpt.llms.engine.replicate import LLMEngineReplicate
+import importlib
 
 default_llm_engine_configs = {
-    "openai-gpt": LLMEngineOpenAIGPT,
-    "openai-legacy": LLMEngineOpenAILegacy,
-    "replicate": LLMEngineReplicate,
-    # "palm": LLMEnginePaLM,
-    "hosted": LLMEngineHosted,
+    "openai-gpt": lambda: importlib.import_module("slashgpt.llms.engine.openai_gpt").LLMEngineOpenAIGPT,
+    "openai-legacy": lambda: importlib.import_module("slashgpt.llms.engine.openai_legacy").LLMEngineOpenAILegacy,
+    "replicate": lambda: importlib.import_module("slashgpt.llms.engine.replicate").LLMEngineReplicate,
+    # "palm": lambda: importlib.import_module("slashgpt.llms.engine.palm").LLMEnginePaLM,
+    "hosted": lambda: importlib.import_module("slashgpt.llms.engine.hosted").LLMEngineHosted,
 }
 
 default_llm_models = {
@@ -34,6 +31,12 @@ default_llm_models = {
     "gpt4": {
         "engine_name": "openai-gpt",
         "model_name": "gpt-4-0613",
+        "api_key": "OPENAI_API_KEY",
+        "max_token": 8192,
+    },
+    "gpt4t": {
+        "engine_name": "openai-gpt",
+        "model_name": "gpt-4-1106-preview",
         "api_key": "OPENAI_API_KEY",
         "max_token": 8192,
     },

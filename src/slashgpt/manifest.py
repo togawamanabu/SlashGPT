@@ -1,20 +1,19 @@
 import json
 import random
 import re
+import importlib
+
 from datetime import datetime
 from typing import List, Optional
 
 from slashgpt.chat_config import ChatConfig
-from slashgpt.dbs.db_chroma import DBChroma
-from slashgpt.dbs.db_pgvector import DBPgVector
-from slashgpt.dbs.db_pinecone import DBPinecone
 from slashgpt.dbs.vector_engine_openai import VectorEngineOpenAI
 from slashgpt.utils.print import print_debug, print_info, print_warning
 
 __vector_dbs = {
-    "pinecone": DBPinecone,
-    "pgvector": DBPgVector,
-    "chroma": DBChroma,
+    "pinecone": lambda: getattr(importlib.import_module("slashgpt.dbs.db_pinecone"), "DBPinecone"),
+    "pgvector": lambda: getattr(importlib.import_module("slashgpt.dbs.db_pgvector"), "DBPgVector"),
+    "chroma": lambda: getattr(importlib.import_module("slashgpt.dbs.db_chroma"), "DBChroma"),
 }
 
 __vector_engines = {"openai": VectorEngineOpenAI}

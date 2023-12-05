@@ -5,7 +5,7 @@ from typing import TYPE_CHECKING, Optional, Union
 
 from slashgpt.chat_history import ChatHistory
 from slashgpt.function.function_action import FunctionAction
-from slashgpt.function.jupyter_runtime import PythonRuntime
+from slashgpt.function.abstruct_runtime import AbstructRuntime
 from slashgpt.utils.print import print_error, print_warning
 
 if TYPE_CHECKING:
@@ -67,14 +67,14 @@ class FunctionCall:
 
         return arguments
 
-    def get_function(self, runtime: PythonRuntime, function_name: str):
+    def get_function(self, runtime: AbstructRuntime, function_name: str):
         """Returns the spacified python function"""
         if self.__manifest.get("notebook") and runtime is not None:
             return getattr(runtime, function_name)
         elif self.__manifest.get("module"):
             return self.__manifest.get_module(function_name)  # python code
 
-    def process_function_call(self, history: ChatHistory, runtime: PythonRuntime = None, verbose: bool = False):
+    def process_function_call(self, history: ChatHistory, runtime: AbstructRuntime = None, verbose: bool = False):
         """Process (=execute) the function call as specified in the "actions" section or "module" section of the manifest file"""
         function_name = self.__name()
         if function_name is None:

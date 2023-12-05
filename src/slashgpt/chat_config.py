@@ -6,6 +6,8 @@ from slashgpt.llms.default_config import default_llm_engine_configs, default_llm
 from slashgpt.llms.model import LlmModel
 from slashgpt.utils.print import print_warning
 
+import logging
+
 if TYPE_CHECKING:
     from slashgpt.manifest import Manifest
 

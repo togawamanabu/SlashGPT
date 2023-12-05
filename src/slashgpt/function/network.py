@@ -3,8 +3,6 @@ import re
 import urllib.parse
 
 import requests
-from gql import Client, gql
-from gql.transport.requests import RequestsHTTPTransport
 
 from slashgpt.utils.print import print_debug, print_error
 
@@ -24,6 +22,9 @@ def ensure_dict(input_data):
 
 
 def graphQLRequest(url: str, headers: dict, appkey_value: str, arguments: dict, verbose: bool):
+    from gql import Client, gql
+    from gql.transport.requests import RequestsHTTPTransport
+
     try:
         arguments = ensure_dict(arguments)
         appkey = {"appkey": appkey_value}

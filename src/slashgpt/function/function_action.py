@@ -3,12 +3,11 @@ import os
 import re
 from urllib.parse import quote_plus, urlparse
 
-from slashgpt.function.network import graphQLRequest, http_request
 from slashgpt.utils.print import print_debug, print_error, print_function
 from slashgpt.utils.utils import CallType
+from slashgpt.function.abstruct_runtime import AbstructRuntime
 
-
-class FunctionAction:
+class FunctionAction(AbstructRuntime):
     """It represents an action to take for the spcified function call (by LLM)"""
 
     def __init__(self, function_action_data: dict):
@@ -57,6 +56,8 @@ class FunctionAction:
         """Execute a function appropriately for each CallType"""
         type = self.__call_type()
         if type == CallType.REST:
+            from slashgpt.function.network import http_request
+
             appkey_value = self.__get_appkey_value() or ""
 
             return http_request(
@@ -68,6 +69,8 @@ class FunctionAction:
                 verbose,
             )
         if type == CallType.GRAPHQL:
+            from slashgpt.function.network import graphQLRequest
+
             appkey_value = self.__get_appkey_value() or ""
             return graphQLRequest(
                 url=self.__get("url"),

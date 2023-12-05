@@ -71,9 +71,14 @@ class LlmModel:
 
     def __get_engine(self, llm_engine_configs: dict):
         class_data = llm_engine_configs.get(self.engine_name())
+        print(f"engine_name: {self.engine_name()}") 
+        print(class_data)
 
         if class_data:
-            if inspect.isclass(class_data):
+            if callable(class_data):
+                engine_class = class_data()
+                return engine_class(self)
+            elif inspect.isclass(class_data):
                 return class_data(self)
             else:
                 module = importlib.import_module(class_data["module_name"])

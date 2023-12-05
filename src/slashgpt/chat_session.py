@@ -6,7 +6,7 @@ from typing import Callable, List, Optional
 from slashgpt.chat_config import ChatConfig
 from slashgpt.chat_history import ChatHistory
 from slashgpt.dbs.db_base import VectorDBBase
-from slashgpt.function.jupyter_runtime import PythonRuntime
+from slashgpt.function.abstruct_runtime import AbstructRuntime
 from slashgpt.history.storage.abstract import ChatHistoryAbstractStorage
 from slashgpt.history.storage.memory import ChatHistoryMemoryStorage
 from slashgpt.llms.model import LlmModel
@@ -177,7 +177,7 @@ class ChatSession:
 
         return (res, function_call)
 
-    def call_loop(self, callback: Callable[[str, tuple[str, dict]], None], runtime: PythonRuntime = None):
+    def call_loop(self, callback: Callable[[str, tuple[str, dict]], None], runtime: AbstructRuntime = None):
         """
         Calls the LLM and process the response (functions calls).
         It may call itself recursively if ncessary.
