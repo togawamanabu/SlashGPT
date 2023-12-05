@@ -6,7 +6,6 @@ import requests
 
 from slashgpt.utils.print import print_debug, print_error
 
-
 def ensure_dict(input_data):
     if isinstance(input_data, dict):
         return input_data

@@ -71,8 +71,6 @@ class LlmModel:
 
     def __get_engine(self, llm_engine_configs: dict):
         class_data = llm_engine_configs.get(self.engine_name())
-        print(f"engine_name: {self.engine_name()}") 
-        print(class_data)
 
         if class_data:
             if callable(class_data):

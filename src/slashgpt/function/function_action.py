@@ -5,9 +5,8 @@ from urllib.parse import quote_plus, urlparse
 
 from slashgpt.utils.print import print_debug, print_error, print_function
 from slashgpt.utils.utils import CallType
-from slashgpt.function.abstruct_runtime import AbstructRuntime
 
-class FunctionAction(AbstructRuntime):
+class FunctionAction:
     """It represents an action to take for the spcified function call (by LLM)"""
 
     def __init__(self, function_action_data: dict):

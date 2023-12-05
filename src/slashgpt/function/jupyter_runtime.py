@@ -12,6 +12,7 @@ import matplotlib.pyplot as plt
 from dotenv import load_dotenv
 
 from slashgpt.utils.print import print_error
+from slashgpt.function.abstruct_runtime import AbstructRuntime
 
 load_dotenv()  # Load default environment variables (.env)
 CODEBOX_API_KEY = os.getenv("CODEBOX_API_KEY")
@@ -19,7 +20,7 @@ if CODEBOX_API_KEY and CODEBOX_API_KEY != "local":
     cb.set_api_key(CODEBOX_API_KEY)
 
 
-class PythonRuntime:
+class PythonRuntime(AbstructRuntime):
     def __init__(self, path: str):
         self.ipython: Optional[IPython.InteractiveShell] = None
         self.notebook: Dict[str, Any] = {}
